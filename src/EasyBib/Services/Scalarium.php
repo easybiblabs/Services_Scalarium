@@ -22,4 +22,15 @@ abstract class Scalarium {
         $transport = new Transport($this->_endpoint, $this->_accept, $this->_token);
         return $transport->retrieveApiData($path);
     }
+
+
+    function retrieveApiParseJSON($path)
+    {
+        $apiJSON = $this->retrieveApi($path);
+        if ($apiJSON === false) {
+            return false;
+        }
+        $apiParsedJSON = json_decode($apiJSON, true);
+        return $apiParsedJSON;
+    }
 }

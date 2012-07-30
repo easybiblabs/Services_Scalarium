@@ -22,7 +22,7 @@ class Transport
     {
         $request = new HTTP_Request2($this->_endpoint . $path);
         $requestWorked = true;
-        $request->setConfig('ssl_verify_peer', false) // if you verify SSL it will throw errors
+        $request->setConfig('ssl_verify_peer', false) // if you verify SSL, it will throw errors
             ->setHeader('Accept: ' . $this->_accept)
             ->setHeader('X-Scalarium-Token: ' . $this->_token);
 
