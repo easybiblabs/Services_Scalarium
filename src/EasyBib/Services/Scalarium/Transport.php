@@ -1,10 +1,9 @@
 <?php
 
 namespace EasyBib\Services\Scalarium;
-use \EasyBib\Services\Scalarium;
 use \HTTP_Request2;
 
-class Transport extends Scalarium
+class Transport
 {
     private $_endpoint = '';
     private $_token = '';
