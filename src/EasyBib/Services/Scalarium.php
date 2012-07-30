@@ -17,16 +17,16 @@ abstract class Scalarium {
     }
 
 
-    function retrieveApi($path)
+    function retrieveAPI($path)
     {
         $transport = new Transport($this->_endpoint, $this->_accept, $this->_token);
-        return $transport->retrieveApiData($path);
+        return $transport->retrieveAPIData($path);
     }
 
 
-    function retrieveApiParseJSON($path)
+    function retrieveAPIParseJSON($path)
     {
-        $apiJSON = $this->retrieveApi($path);
+        $apiJSON = $this->retrieveAPI($path);
         if ($apiJSON === false) {
             return false;
         }

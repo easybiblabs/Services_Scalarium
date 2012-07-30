@@ -7,6 +7,6 @@ class Clouds extends Scalarium
 {
     function getClouds()
     {
-        return $this->retrieveApiParseJSON('clouds');
+        return $this->retrieveAPIParseJSON('clouds');
     }
 }

@@ -18,7 +18,7 @@ class Transport
     }
 
 
-    function retrieveApiData($path)
+    function retrieveAPIData($path)
     {
         $request = new HTTP_Request2($this->_endpoint . $path);
         $requestWorked = true;

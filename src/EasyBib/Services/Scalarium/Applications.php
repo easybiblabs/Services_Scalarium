@@ -7,12 +7,12 @@ class Applications extends Scalarium
 {
     function getApplications()
     {
-        return $this->retrieveApiParseJSON('applications');
+        return $this->retrieveAPIParseJSON('applications');
     }
 
 
     function getDeploymentsByApplication($applicationID)
     {
-        return $this->retrieveApiParseJSON("applications/$applicationID/deployments");
+        return $this->retrieveAPIParseJSON("applications/$applicationID/deployments");
     }
 }
