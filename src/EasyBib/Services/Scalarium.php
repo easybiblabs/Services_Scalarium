@@ -5,15 +5,15 @@ use \EasyBib\Services\Scalarium\Transport;
 
 abstract class Scalarium {
     private $_endpoint = '';
-    private $_token = '';
     private $_accept = '';
+    private $_token = '';
 
 
     function __construct($endpoint, $accept, $token)
     {
         $this->_endpoint = $endpoint;
-        $this->_token = $token;
         $this->_accept = $accept;
+        $this->_token = $token;
     }
 
 
