@@ -4,9 +4,9 @@ namespace EasyBib\Services;
 use \EasyBib\Services\Scalarium\Transport;
 
 abstract class Scalarium {
-    private $_endpoint = '';
-    private $_accept = '';
-    private $_token = '';
+    protected $_endpoint = '';
+    protected $_accept = '';
+    protected $_token = '';
 
 
     function __construct($endpoint, $accept, $token)
