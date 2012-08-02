@@ -14,6 +14,7 @@
  */
 
 namespace EasyBib\Services\Scalarium;
+
 use \EasyBib\Services\Scalarium;
 
 /**
@@ -35,7 +36,7 @@ class Applications extends Scalarium
      *
      * @return mixed array (parsed JSON) or bool (false = error occurred)
      */
-    function getApplications()
+    public function getApplications()
     {
         return $this->retrieveAPIParseJSON('applications');
     }
@@ -48,10 +49,11 @@ class Applications extends Scalarium
      *
      * @return mixed array (parsed JSON) or bool (false = error occurred)
      */
-    function getDeploymentsByApplication($applicationID)
+    public function getDeploymentsByApplication($applicationID)
     {
         return $this->retrieveAPIParseJSON(
             "applications/$applicationID/deployments"
         );
     }
 }
+

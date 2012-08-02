@@ -14,6 +14,7 @@
  */
 
 namespace EasyBib\Services\Scalarium;
+
 use \EasyBib\Services\Scalarium;
 use \EasyBib\Services\Scalarium\Applications;
 
@@ -37,7 +38,7 @@ class Deployments extends Scalarium
      *
      * @return array (parsed JSON)
      */
-    function getDeployments()
+    public function getDeployments()
     {
         $deployments = array();
         $applications = new Applications(
@@ -53,3 +54,4 @@ class Deployments extends Scalarium
         return $deployments;
     }
 }
+

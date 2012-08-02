@@ -14,6 +14,7 @@
  */
 
 namespace EasyBib\Services;
+
 use \EasyBib\Services\Scalarium\Transport;
 
 /**
@@ -44,7 +45,7 @@ abstract class Scalarium
      *
      * @return $this
      */
-    function __construct($endpoint, $accept, $token)
+    public function __construct($endpoint, $accept, $token)
     {
         $this->endpoint = $endpoint;
         $this->accept = $accept;
@@ -59,7 +60,7 @@ abstract class Scalarium
      *
      * @return mixed string (document body) or bool (false = error occurred)
      */
-    function retrieveAPI($path)
+    protected function retrieveAPI($path)
     {
         $transport = new Transport($this->endpoint, $this->accept, $this->token);
         return $transport->retrieveAPIData($path);
@@ -75,7 +76,7 @@ abstract class Scalarium
      * @return mixed array (parsed JSON) or bool (false = error occurred while
      *                                            fetching or parsing)
      */
-    function retrieveAPIParseJSON($path)
+    protected function retrieveAPIParseJSON($path)
     {
         $apiJSON = $this->retrieveAPI($path);
         if ($apiJSON === false) {
@@ -85,3 +86,4 @@ abstract class Scalarium
         return $apiParsedJSON;
     }
 }
+

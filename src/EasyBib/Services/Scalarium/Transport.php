@@ -14,6 +14,7 @@
  */
 
 namespace EasyBib\Services\Scalarium;
+
 use \HTTP_Request2;
 
 /**
@@ -44,7 +45,7 @@ class Transport
      *
      * @return $this
      */
-    function __construct($endpoint, $accept, $token)
+    public function __construct($endpoint, $accept, $token)
     {
         $this->_endpoint = $endpoint;
         $this->_accept = $accept;
@@ -61,7 +62,7 @@ class Transport
      *
      * @return mixed string or bool (false = error occurred while fetching)
      */
-    function retrieveAPIData($path)
+    public function retrieveAPIData($path)
     {
         $request = new HTTP_Request2($this->_endpoint . $path);
         $requestWorked = true;
@@ -76,7 +77,7 @@ class Transport
             $requestWorked = false;
         }
 
-        if ( $requestWorked and ($response->getStatus() != '200') ) {
+        if ($requestWorked and ($response->getStatus() != '200')) {
             $requestWorked = false;
         }
 
@@ -87,3 +88,4 @@ class Transport
         return $response->getBody();
     }
 }
+

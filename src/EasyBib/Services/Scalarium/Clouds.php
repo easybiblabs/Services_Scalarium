@@ -14,6 +14,7 @@
  */
 
 namespace EasyBib\Services\Scalarium;
+
 use \EasyBib\Services\Scalarium;
 use \EasyBib\Services\Scalarium\Applications;
 
@@ -36,7 +37,7 @@ class Clouds extends Scalarium
      *
      * @return mixed array (parsed JSON) or bool (false = error occurred)
      */
-    function getClouds()
+    public function getClouds()
     {
         return $this->retrieveAPIParseJSON('clouds');
     }
@@ -49,7 +50,7 @@ class Clouds extends Scalarium
      *
      * @return array parsed JSON
      */
-    function getApplicationsInCloud($cloudID)
+    public function getApplicationsInCloud($cloudID)
     {
         $applications = new Applications(
             $this->endpoint, $this->accept, $this->token
@@ -66,3 +67,4 @@ class Clouds extends Scalarium
         return $applicationsInCloud;
     }
 }
+
