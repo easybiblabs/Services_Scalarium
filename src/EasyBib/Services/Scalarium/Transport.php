@@ -31,9 +31,9 @@ use \HTTP_Request2;
  */
 class Transport
 {
-    private $_endpoint = '';
-    private $_accept = '';
-    private $_token = '';
+    public $endpoint = '';
+    public $accept = '';
+    public $token = '';
 
 
     /**
@@ -47,9 +47,9 @@ class Transport
      */
     public function __construct($endpoint, $accept, $token)
     {
-        $this->_endpoint = $endpoint;
-        $this->_accept = $accept;
-        $this->_token = $token;
+        $this->endpoint = $endpoint;
+        $this->accept = $accept;
+        $this->token = $token;
     }
 
 
@@ -64,12 +64,12 @@ class Transport
      */
     public function retrieveAPIData($path)
     {
-        $request = new HTTP_Request2($this->_endpoint . $path);
+        $request = new HTTP_Request2($this->endpoint . $path);
         $requestWorked = true;
         $request->setConfig('ssl_verify_peer', false)
         // if you verify SSL, it will throw errors
-            ->setHeader('Accept: ' . $this->_accept)
-            ->setHeader('X-Scalarium-Token: ' . $this->_token);
+            ->setHeader('Accept: ' . $this->accept)
+            ->setHeader('X-Scalarium-Token: ' . $this->token);
 
         try {
             $response = $request->send();

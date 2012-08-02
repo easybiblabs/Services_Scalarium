@@ -31,9 +31,9 @@ use \EasyBib\Services\Scalarium\Transport;
  */
 abstract class Scalarium
 {
-    protected $endpoint = '';
-    protected $accept = '';
-    protected $token = '';
+    public $endpoint = '';
+    public $accept = '';
+    public $token = '';
 
 
     /**
