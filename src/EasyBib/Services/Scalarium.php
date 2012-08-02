@@ -1,29 +1,80 @@
 <?php
 
+/**
+ * PHP wrapper for the Scalarium API
+ *
+ * PHP Version 5
+ *
+ * @category EasyBib
+ * @package  EasyBib_Services_Scalarium
+ * @author   Ulf Härnhammar <ulfharn@gmail.com>
+ * @license  http://opensource.org/licenses/bsd-license.php New BSD License
+ * @version  SVN: $Id$
+ * @link     http://www.easybib.com
+ */
+
 namespace EasyBib\Services;
 use \EasyBib\Services\Scalarium\Transport;
 
-abstract class Scalarium {
-    protected $_endpoint = '';
-    protected $_accept = '';
-    protected $_token = '';
+/**
+ * Scalarium
+ *
+ * This is the abstract class that the other classes extend.
+ *
+ * @category EasyBib
+ * @package  EasyBib_Services_Scalarium
+ * @author   Ulf Härnhammar <ulfharn@gmail.com>
+ * @license  http://opensource.org/licenses/bsd-license.php New BSD License
+ * @version  Release: @package_version@
+ * @link     http://www.easybib.com
+ */
+abstract class Scalarium
+{
+    protected $endpoint = '';
+    protected $accept = '';
+    protected $token = '';
 
 
+    /**
+     * __construct
+     *
+     * @param string $endpoint the endpoint URL for their API
+     * @param string $accept   the Accept HTTP header that selects API version
+     * @param string $token    the Scalarium token
+     *
+     * @return $this
+     */
     function __construct($endpoint, $accept, $token)
     {
-        $this->_endpoint = $endpoint;
-        $this->_accept = $accept;
-        $this->_token = $token;
+        $this->endpoint = $endpoint;
+        $this->accept = $accept;
+        $this->token = $token;
     }
 
 
+    /**
+     * Retrieves a document body from their API.
+     *
+     * @param string $path the relative path for the API call
+     *
+     * @return mixed string (document body) or bool (false = error occurred)
+     */
     function retrieveAPI($path)
     {
-        $transport = new Transport($this->_endpoint, $this->_accept, $this->_token);
+        $transport = new Transport($this->endpoint, $this->accept, $this->token);
         return $transport->retrieveAPIData($path);
     }
 
 
+    /**
+     * Retrieves a document body from their API and parses it as JSON to array
+     * format.
+     *
+     * @param string $path the relative path for the API call
+     *
+     * @return mixed array (parsed JSON) or bool (false = error occurred while
+     *                                            fetching or parsing)
+     */
     function retrieveAPIParseJSON($path)
     {
         $apiJSON = $this->retrieveAPI($path);
