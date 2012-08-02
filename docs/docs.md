@@ -14,7 +14,7 @@ To use this wrapper, you need to know the endpoint URL, the access header, and t
 
 ## Applications
 
-The Application class can be used to retrieve all applications:
+The Applications class can be used to retrieve all applications:
 
     $applications = new Applications($endpoint, $accept, $token);
     $applicationsData = $applications->getApplications();
