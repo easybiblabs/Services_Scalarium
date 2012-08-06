@@ -43,19 +43,18 @@ class CloudsTest extends \PHPUnit_Framework_TestCase
     {
         $stub = $this->getMock('\EasyBib\Services\Scalarium\Clouds', array('getApplications'),
                                array('endpoint', 'accept', 'token'));
+        $in = array(
+                    array('cluster_id' => 1),
+                    array('cluster_id' => 2, 'data' => 'x'),
+                    array('cluster_id' => 3),
+                    array('cluster_id' => 2, 'data' => 'y')
+                   );
+        $out = array(array('cluster_id' => 2, 'data' => 'x'),
+                     array('cluster_id' => 2, 'data' => 'y'));
         $stub->expects($this->any())
             ->method('getApplications')
-            ->will($this->returnValue(
-                   array(
-                         array('cluster_id' => 1),
-                         array('cluster_id' => 2, 'data' => 'x'),
-                         array('cluster_id' => 3),
-                         array('cluster_id' => 2, 'data' => 'y')
-                        )
-                   ));
-        $retu = array(array('cluster_id' => 2, 'data' => 'x'),
-                      array('cluster_id' => 2, 'data' => 'y'));
-        $this->assertEquals($retu, $stub->getApplicationsInCloud('2'));
+            ->will($this->returnValue($in));
+        $this->assertEquals($out, $stub->getApplicationsInCloud('2'));
     }
 }
 

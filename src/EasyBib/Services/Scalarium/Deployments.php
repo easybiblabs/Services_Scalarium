@@ -33,6 +33,40 @@ use \EasyBib\Services\Scalarium\Applications;
 class Deployments extends Scalarium
 {
     /**
+     * Retrieves all applications from their API.
+     *
+     * @param string $endpoint the endpoint URL
+     * @param string $accept   the Accept HTTP header
+     * @param string $token    the Scalarium token
+     *
+     * @return mixed array (parsed JSON) or bool (false = error occurred)
+     */
+    public function getApplications($endpoint, $accept, $token)
+    {
+        $applications = new Applications($endpoint, $accept, $token);
+        return $applications->getApplications();
+    }
+
+
+    /**
+     * Retrieves all deployments of one application from their API.
+     *
+     * @param string $applicationID ID for the application
+     * @param string $endpoint      the endpoint URL
+     * @param string $accept        the Accept HTTP header
+     * @param string $token         the Scalarium token
+     *
+     * @return mixed array (parsed JSON) or bool (false = error occurred)
+     */
+    public function getDeploymentsByApplication($applicationID, $endpoint, $accept,
+        $token
+    ) {
+        $applications = new Applications($endpoint, $accept, $token);
+        return $applications->getDeploymentsByApplication($applicationID);
+    }
+
+
+    /**
      * Retrieves all application deployments from their API. Note that this
      * is an expensive operation that will call the API several times.
      *
@@ -41,14 +75,16 @@ class Deployments extends Scalarium
     public function getDeployments()
     {
         $deployments = array();
-        $applications = new Applications(
+        $applicationsData = $this->getApplications(
             $this->endpoint, $this->accept, $this->token
         );
-        $applicationsData = $applications->getApplications();
         if (is_array($applicationsData)) {
             foreach ($applicationsData as $oneApplication) {
-                $deployments[ $oneApplication['id'] ] = $applications->
-                    getDeploymentsByApplication($oneApplication['id']);
+                $deployments[ $oneApplication['id'] ] = $this->
+                    getDeploymentsByApplication(
+                        $oneApplication['id'], $this->endpoint,
+                        $this->accept, $this->token
+                    );
             }
         }
         return $deployments;
