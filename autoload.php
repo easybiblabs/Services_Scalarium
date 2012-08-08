@@ -6,3 +6,5 @@ require __DIR__ . '/src/EasyBib/Services/Scalarium/Clouds.php';
 require __DIR__ . '/src/EasyBib/Services/Scalarium/Deployments.php';
 require __DIR__ . '/src/EasyBib/Services/Scalarium/Transport.php';
 
+require 'HTTP/Request2.php';
+
