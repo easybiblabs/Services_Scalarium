@@ -63,7 +63,8 @@ abstract class Scalarium
     {
         $transport = new Transport($this->endpoint, $this->accept, $this->token);
         $request = new \HTTP_Request2;
-        return $transport->retrieveAPIData($path, $request);
+        $transport->setRequest($request);
+        return $transport->retrieveAPIData($path);
     }
 
 

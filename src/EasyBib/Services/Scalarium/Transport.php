@@ -53,10 +53,22 @@ class Transport
 
 
     /**
+     * Sets the request.
+     *
+     * @param object $request HTTP_Request2 object (or similar for testing)
+     *
+     * @return $this
+     */
+    public function setRequest($request)
+    {
+        $this->request = $request;
+    }
+
+
+    /**
      * Retrieves a document body from their API.
      *
-     * @param string $path       the relative path for the API call
-     * @param object $requestobj the HTTP_Request2 object
+     * @param string $path the relative path for the API call
      *
      * @return string
      *
@@ -64,10 +76,10 @@ class Transport
      * @throws \RuntimeException when the returned HTTP status isn't 200
      * @throws \RuntimeException when the returned document body is empty
      */
-    public function retrieveAPIData($path, $requestobj)
+    public function retrieveAPIData($path)
     {
         if (null === $this->request) {
-            $this->request = $requestobj;
+            $this->request = new \HTTP_Request2;
         }
 
         $request = $this->request;
