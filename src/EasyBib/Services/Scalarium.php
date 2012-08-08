@@ -16,6 +16,7 @@
 namespace EasyBib\Services;
 
 use \EasyBib\Services\Scalarium\Transport;
+use \HTTP_Request2;
 
 /**
  * Scalarium
@@ -56,12 +57,13 @@ abstract class Scalarium
      *
      * @param string $path the relative path for the API call
      *
-     * @return mixed string (document body) or bool (false = error occurred)
+     * @return string document body
      */
     protected function retrieveAPI($path)
     {
         $transport = new Transport($this->endpoint, $this->accept, $this->token);
-        return $transport->retrieveAPIData($path);
+        $request = new \HTTP_Request2;
+        return $transport->retrieveAPIData($path, $request);
     }
 
 
@@ -73,15 +75,11 @@ abstract class Scalarium
      *
      * @return array (parsed JSON)
      *
-     * @throws \RuntimeException When the API doesn't return a document body.
      * @throws \RuntimeException When the returned document body isn't correct JSON.
      */
     protected function retrieveAPIParseJSON($path)
     {
         $apiJSON = $this->retrieveAPI($path);
-        if ($apiJSON === false) {
-            throw new \RuntimeException("didn't return a document body");
-        }
         $apiParsedJSON = json_decode($apiJSON, true);
         if (!is_array($apiParsedJSON)) {
             throw new \RuntimeException("document body isn't correct JSON=$apiJSON");

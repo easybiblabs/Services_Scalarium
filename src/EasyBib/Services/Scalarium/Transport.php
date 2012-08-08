@@ -15,8 +15,6 @@
 
 namespace EasyBib\Services\Scalarium;
 
-use \HTTP_Request2;
-
 /**
  * Transport
  *
@@ -31,9 +29,10 @@ use \HTTP_Request2;
  */
 class Transport
 {
-    public $endpoint = '';
-    public $accept = '';
-    public $token = '';
+    protected $endpoint = '';
+    protected $accept = '';
+    protected $token = '';
+    protected $request = null;
 
 
     /**
@@ -54,18 +53,25 @@ class Transport
 
 
     /**
-     * Retrieves a document body from their API. If the HTTP status differs from
-     * 200 or if an exception is thrown, the document body will be thrown away
-     * and we will return false instead.
+     * Retrieves a document body from their API.
      *
-     * @param string $path the relative path for the API call
+     * @param string $path       the relative path for the API call
+     * @param object $requestobj the HTTP_Request2 object
      *
-     * @return mixed string or bool (false = error occurred while fetching)
+     * @return string
+     *
+     * @throws \RuntimeException when another exception occurred in send()
+     * @throws \RuntimeException when the returned HTTP status isn't 200
+     * @throws \RuntimeException when the returned document body is empty
      */
-    public function retrieveAPIData($path)
+    public function retrieveAPIData($path, $requestobj)
     {
-        $request = new HTTP_Request2($this->endpoint . $path);
-        $requestWorked = true;
+        if (null === $this->request) {
+            $this->request = $requestobj;
+        }
+
+        $request = $this->request;
+        $request->setUrl($this->endpoint . $path);
         $request->setConfig('ssl_verify_peer', false)
         // if you verify SSL, it will throw errors
             ->setHeader('Accept: ' . $this->accept)
@@ -74,18 +80,26 @@ class Transport
         try {
             $response = $request->send();
         } catch (\Exception $e) {
-            $requestWorked = false;
+            throw new \RuntimeException(
+                'error occurred in send(): ' .
+                $e->getMessage()
+            );
         }
 
-        if (true === $requestWorked && ($response->getStatus() != '200')) {
-            $requestWorked = false;
+        if ($response->getStatus() != '200') {
+            throw new \RuntimeException(
+                'http status=' .
+                $response->getStatus() .
+                ', document body=' .
+                $response->getBody()
+            );
         }
 
-        if (!$requestWorked) {
-            return false;
+        $body = $response->getBody();
+        if (empty($body)) {
+            throw new \RuntimeException('document body is empty');
         }
-
-        return $response->getBody();
+        return $body;
     }
 }
 

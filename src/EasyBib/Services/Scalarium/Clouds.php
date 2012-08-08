@@ -35,7 +35,7 @@ class Clouds extends Scalarium
     /**
      * Retrieves all clouds from their API.
      *
-     * @return mixed array (parsed JSON) or bool (false = error occurred)
+     * @return array parsed JSON
      */
     public function getClouds()
     {
@@ -46,7 +46,7 @@ class Clouds extends Scalarium
     /**
      * Retrieves all applications from their API.
      *
-     * @return mixed array (parsed JSON) or bool (false = error occurred)
+     * @return array parsed JSON
      */
     public function getApplications()
     {

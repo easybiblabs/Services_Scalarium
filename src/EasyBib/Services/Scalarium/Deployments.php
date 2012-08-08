@@ -35,7 +35,7 @@ class Deployments extends Scalarium
     /**
      * Retrieves all applications from their API.
      *
-     * @return mixed array (parsed JSON) or bool (false = error occurred)
+     * @return array parsed JSON
      */
     public function getApplications()
     {
@@ -49,7 +49,7 @@ class Deployments extends Scalarium
      *
      * @param string $applicationID ID for the application
      *
-     * @return mixed array (parsed JSON) or bool (false = error occurred)
+     * @return array parsed JSON
      */
     public function getDeploymentsByApplication($applicationID)
     {
@@ -62,7 +62,7 @@ class Deployments extends Scalarium
      * Retrieves all application deployments from their API. Note that this
      * is an expensive operation that will call the API several times.
      *
-     * @return array (parsed JSON)
+     * @return array parsed JSON
      */
     public function getDeployments()
     {
