@@ -77,7 +77,7 @@ class Transport
             $requestWorked = false;
         }
 
-        if ($requestWorked and ($response->getStatus() != '200')) {
+        if (true === $requestWorked && ($response->getStatus() != '200')) {
             $requestWorked = false;
         }
 
