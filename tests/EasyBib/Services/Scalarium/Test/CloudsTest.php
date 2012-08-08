@@ -9,7 +9,7 @@ class CloudsTest extends \PHPUnit_Framework_TestCase
     public function testGetCloudsCorrect()
     {
         $stub = $this->getMock('\EasyBib\Services\Scalarium\Clouds', array('retrieveAPI'),
-                               array('endpoint', 'accept', 'token'));
+                               array('http://example.com', 'token'));
         $stub->expects($this->any())
             ->method('retrieveAPI')
             ->will($this->returnValue('["test2"]'));
@@ -19,30 +19,32 @@ class CloudsTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCloudsFalse()
     {
+        $this->setExpectedException('RuntimeException');
         $stub = $this->getMock('\EasyBib\Services\Scalarium\Clouds', array('retrieveAPI'),
-                               array('endpoint', 'accept', 'token'));
+                               array('http://example.com', 'token'));
         $stub->expects($this->any())
             ->method('retrieveAPI')
             ->will($this->returnValue(false));
-        $this->assertEquals(false, $stub->getClouds());
+        $stub->getClouds();
     }
 
 
     public function testGetCloudsBadJSON()
     {
+        $this->setExpectedException('RuntimeException');
         $stub = $this->getMock('\EasyBib\Services\Scalarium\Clouds', array('retrieveAPI'),
-                               array('endpoint', 'accept', 'token'));
+                               array('http://example.com', 'token'));
         $stub->expects($this->any())
             ->method('retrieveAPI')
             ->will($this->returnValue('["test2]'));
-        $this->assertEquals(false, $stub->getClouds());
+        $stub->getClouds();
     }
 
 
     public function testGetApplicationsInCloud()
     {
         $stub = $this->getMock('\EasyBib\Services\Scalarium\Clouds', array('getApplications'),
-                               array('endpoint', 'accept', 'token'));
+                               array('http://example.com', 'token'));
         $in = array(
                     array('cluster_id' => 1),
                     array('cluster_id' => 2, 'data' => 'x'),
