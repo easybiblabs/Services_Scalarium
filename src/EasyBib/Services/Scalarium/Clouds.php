@@ -46,15 +46,11 @@ class Clouds extends Scalarium
     /**
      * Retrieves all applications from their API.
      *
-     * @param string $endpoint the endpoint URL
-     * @param string $accept   the Accept HTTP header
-     * @param string $token    the Scalarium token
-     *
      * @return mixed array (parsed JSON) or bool (false = error occurred)
      */
-    public function getApplications($endpoint, $accept, $token)
+    public function getApplications()
     {
-        $applications = new Applications($endpoint, $accept, $token);
+        $applications = new Applications($this->endpoint, $this->token);
         return $applications->getApplications();
     }
 
@@ -68,9 +64,7 @@ class Clouds extends Scalarium
      */
     public function getApplicationsInCloud($cloudID)
     {
-        $applicationsData = $this->getApplications(
-            $this->endpoint, $this->accept, $this->token
-        );
+        $applicationsData = $this->getApplications();
         $applicationsInCloud = array();
         if (is_array($applicationsData)) {
             foreach ($applicationsData as $oneApplication) {

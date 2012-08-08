@@ -31,24 +31,22 @@ use \EasyBib\Services\Scalarium\Transport;
  */
 abstract class Scalarium
 {
-    public $endpoint = '';
-    public $accept = '';
-    public $token = '';
+    protected $endpoint = '';
+    protected $accept = 'application/vnd.scalarium-v1+json';
+    protected $token = '';
 
 
     /**
      * __construct
      *
      * @param string $endpoint the endpoint URL for their API
-     * @param string $accept   the Accept HTTP header that selects API version
      * @param string $token    the Scalarium token
      *
      * @return $this
      */
-    public function __construct($endpoint, $accept, $token)
+    public function __construct($endpoint, $token)
     {
         $this->endpoint = $endpoint;
-        $this->accept = $accept;
         $this->token = $token;
     }
 
@@ -73,16 +71,21 @@ abstract class Scalarium
      *
      * @param string $path the relative path for the API call
      *
-     * @return mixed array (parsed JSON) or bool (false = error occurred while
-     *                                            fetching or parsing)
+     * @return array (parsed JSON)
+     *
+     * @throws \RuntimeException When the API doesn't return a document body.
+     * @throws \RuntimeException When the returned document body isn't correct JSON.
      */
     protected function retrieveAPIParseJSON($path)
     {
         $apiJSON = $this->retrieveAPI($path);
         if ($apiJSON === false) {
-            return false;
+            throw new \RuntimeException("didn't return a document body");
         }
         $apiParsedJSON = json_decode($apiJSON, true);
+        if (!is_array($apiParsedJSON)) {
+            throw new \RuntimeException("document body isn't correct JSON=$apiJSON");
+        }
         return $apiParsedJSON;
     }
 }
