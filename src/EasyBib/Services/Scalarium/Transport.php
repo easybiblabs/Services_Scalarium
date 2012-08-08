@@ -113,5 +113,33 @@ class Transport
         }
         return $body;
     }
+
+
+    /**
+     * Retrieves protected data in the object.
+     *
+     * @param string $name what to retrieve
+     *
+     * @return string
+     *
+     * @throws \RuntimeException When the $name isn't recognized.
+     */
+    public function __get($name)
+    {
+        switch ($name) {
+        case 'endpoint':
+            return $this->endpoint;
+            break;
+        case 'accept':
+            return $this->accept;
+            break;
+        case 'token':
+            return $this->token;
+            break;
+        default:
+            throw new \RuntimeException("can't access $name");
+            break;
+        }
+    }
 }
 

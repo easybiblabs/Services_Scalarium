@@ -47,8 +47,8 @@ abstract class Scalarium
      */
     public function __construct($endpoint, $token)
     {
-        $this->endpoint = $endpoint;
-        $this->token = $token;
+        $this->__set('endpoint', $endpoint);
+        $this->__set('token', $token);
     }
 
 
@@ -86,6 +86,75 @@ abstract class Scalarium
             throw new \RuntimeException("document body isn't correct JSON=$apiJSON");
         }
         return $apiParsedJSON;
+    }
+
+
+    /**
+     * Retrieves protected data in the object.
+     *
+     * @param string $name what to retrieve
+     *
+     * @return string
+     *
+     * @throws \RuntimeException When the $name isn't recognized.
+     */
+    public function __get($name)
+    {
+        switch ($name) {
+        case 'endpoint':
+            return $this->endpoint;
+            break;
+        case 'token':
+            return $this->token;
+            break;
+        case 'accept':
+            return $this->accept;
+            break;
+        default:
+            throw new \RuntimeException("can't access $name");
+            break;
+        }
+    }
+
+
+    /**
+     * Stores protected data in the object after sanity-checking its value.
+     *
+     * @param string $name  where to store
+     * @param string $value what to store
+     *
+     * @return mixed
+     *
+     * @throws \RuntimeException When the $name isn't recognized or the $value
+     *                           isn't accepted.
+     */
+    public function __set($name, $value)
+    {
+        switch ($name) {
+        case 'endpoint':
+            if (!preg_match('%^https?://.%', $value)) {
+                throw new \RuntimeException(
+                    "endpoint isn't recognized as a url: $value"
+                );
+            }
+            $this->endpoint = $value;
+            break;
+        case 'token':
+            if (empty($value)) {
+                throw new \RuntimeException('token must not be empty');
+            }
+            $this->token = $value;
+            break;
+        case 'accept':
+            if (empty($value)) {
+                throw new \RuntimeException('accept must not be empty');
+            }
+            $this->accept = $value;
+            break;
+        default:
+            throw new \RuntimeException("can't access $name");
+            break;
+        }
     }
 }
 
