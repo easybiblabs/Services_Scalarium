@@ -19,7 +19,7 @@
         }
     ],
     "autoload": {
-        "psr-0": { "Services\\Scalarium": ["src/"]}
+        "psr-0": { "EasyBib\\Services\\Scalarium": ["src/"]}
     },
     "require": {
         "php": ">=5.3.0",
