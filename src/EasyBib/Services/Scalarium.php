@@ -47,6 +47,9 @@ abstract class Scalarium
      */
     public function __construct($endpoint, $token)
     {
+        if (empty($endpoint)) {
+            $endpoint = 'https://manage.scalarium.com/api/';
+        }
         $this->__set('endpoint', $endpoint);
         $this->__set('token', $token);
     }

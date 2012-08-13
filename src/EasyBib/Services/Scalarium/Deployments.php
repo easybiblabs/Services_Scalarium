@@ -16,7 +16,6 @@
 namespace EasyBib\Services\Scalarium;
 
 use \EasyBib\Services\Scalarium;
-use \EasyBib\Services\Scalarium\Applications;
 
 /**
  * Deployments

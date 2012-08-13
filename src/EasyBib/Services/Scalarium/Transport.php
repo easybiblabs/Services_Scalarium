@@ -55,11 +55,11 @@ class Transport
     /**
      * Sets the request.
      *
-     * @param object $request HTTP_Request2 object (or similar for testing)
+     * @param \HTTP_Request2 $request HTTP_Request2 object (or similar for testing)
      *
      * @return $this
      */
-    public function setRequest($request)
+    public function setRequest(\HTTP_Request2 $request)
     {
         $this->request = $request;
     }
@@ -93,8 +93,7 @@ class Transport
             $response = $request->send();
         } catch (\Exception $e) {
             throw new \RuntimeException(
-                'error occurred in send(): ' .
-                $e->getMessage()
+                'error occurred in send()', 0, $e
             );
         }
 
