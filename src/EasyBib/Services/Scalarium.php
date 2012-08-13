@@ -16,7 +16,6 @@
 namespace EasyBib\Services;
 
 use \EasyBib\Services\Scalarium\Transport;
-use \HTTP_Request2;
 
 /**
  * Scalarium
