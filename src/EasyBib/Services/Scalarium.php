@@ -44,12 +44,19 @@ abstract class Scalarium
      * @param string $token    the Scalarium token
      *
      * @return $this
+     *
+     * @throws \InvalidArgumentException when $token is empty
      */
     public function __construct($endpoint, $token)
     {
         if (empty($endpoint)) {
             $endpoint = 'https://manage.scalarium.com/api/';
         }
+
+        if (empty($token)) {
+            throw new \InvalidArgumentException("token can't be empty");
+        }
+
         $this->__set('endpoint', $endpoint);
         $this->__set('token', $token);
     }
@@ -79,7 +86,7 @@ abstract class Scalarium
      *
      * @return array (parsed JSON)
      *
-     * @throws \RuntimeException When the returned document body isn't correct JSON.
+     * @throws \RuntimeException when the returned document body isn't correct JSON
      */
     protected function retrieveAPIParseJSON($path)
     {
@@ -99,7 +106,7 @@ abstract class Scalarium
      *
      * @return string
      *
-     * @throws \RuntimeException When the $name isn't recognized.
+     * @throws \InvalidArgumentException when $name isn't recognized
      */
     public function __get($name)
     {
@@ -114,7 +121,7 @@ abstract class Scalarium
             return $this->accept;
             break;
         default:
-            throw new \RuntimeException("can't access $name");
+            throw new \InvalidArgumentException("can't access $name");
             break;
         }
     }
@@ -128,15 +135,15 @@ abstract class Scalarium
      *
      * @return mixed
      *
-     * @throws \RuntimeException When the $name isn't recognized or the $value
-     *                           isn't accepted.
+     * @throws \InvalidArgumentException when $name isn't recognized or $value
+     *                                   isn't accepted
      */
     public function __set($name, $value)
     {
         switch ($name) {
         case 'endpoint':
             if (!preg_match('%^https?://.%', $value)) {
-                throw new \RuntimeException(
+                throw new \InvalidArgumentException(
                     "endpoint isn't recognized as a url: $value"
                 );
             }
@@ -144,18 +151,18 @@ abstract class Scalarium
             break;
         case 'token':
             if (empty($value)) {
-                throw new \RuntimeException('token must not be empty');
+                throw new \InvalidArgumentException('token must not be empty');
             }
             $this->token = $value;
             break;
         case 'accept':
             if (empty($value)) {
-                throw new \RuntimeException('accept must not be empty');
+                throw new \InvalidArgumentException('accept must not be empty');
             }
             $this->accept = $value;
             break;
         default:
-            throw new \RuntimeException("can't access $name");
+            throw new \InvalidArgumentException("can't access $name");
             break;
         }
     }

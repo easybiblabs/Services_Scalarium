@@ -48,9 +48,14 @@ class Applications extends Scalarium
      * @param string $applicationID ID for the application
      *
      * @return array parsed JSON
+     *
+     * @throws \InvalidArgumentException when $applicationID is empty
      */
     public function getDeploymentsByApplication($applicationID)
     {
+        if (empty($applicationID)) {
+            throw new \InvalidArgumentException("applicationID can't be empty");
+        }
         return $this->retrieveAPIParseJSON(
             "applications/$applicationID/deployments"
         );

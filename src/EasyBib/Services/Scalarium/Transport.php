@@ -43,9 +43,14 @@ class Transport
      * @param string $token    the Scalarium token
      *
      * @return $this
+     *
+     * @throws \InvalidArgumentException if any of the parameters are empty
      */
     public function __construct($endpoint, $accept, $token)
     {
+        if ((empty($endpoint)) or (empty($accept)) or (empty($token))) {
+            throw new \InvalidArgumentException("can't be empty");
+        }
         $this->endpoint = $endpoint;
         $this->accept = $accept;
         $this->token = $token;
@@ -72,12 +77,17 @@ class Transport
      *
      * @return string
      *
+     * @throws \InvalidArgumentException when $path is empty
      * @throws \RuntimeException when another exception occurred in send()
      * @throws \RuntimeException when the returned HTTP status isn't 200
      * @throws \RuntimeException when the returned document body is empty
      */
     public function retrieveAPIData($path)
     {
+        if (empty($path)) {
+            throw new \InvalidArgumentException("path can't be empty");
+        }
+
         if (null === $this->request) {
             $this->request = new \HTTP_Request2;
         }
@@ -121,7 +131,7 @@ class Transport
      *
      * @return string
      *
-     * @throws \RuntimeException When the $name isn't recognized.
+     * @throws \InvalidArgumentException when $name isn't recognized
      */
     public function __get($name)
     {
@@ -136,7 +146,7 @@ class Transport
             return $this->token;
             break;
         default:
-            throw new \RuntimeException("can't access $name");
+            throw new \InvalidArgumentException("can't access $name");
             break;
         }
     }

@@ -61,9 +61,14 @@ class Clouds extends Scalarium
      * @param string $cloudID ID for the cloud
      *
      * @return array parsed JSON
+     *
+     * @throws \InvalidArgumentException when $cloudID is empty
      */
     public function getApplicationsInCloud($cloudID)
     {
+        if (empty($cloudID)) {
+            throw new \InvalidArgumentException("cloudID can't be empty");
+        }
         $applicationsData = $this->getApplications();
         $applicationsInCloud = array();
         if (is_array($applicationsData)) {
