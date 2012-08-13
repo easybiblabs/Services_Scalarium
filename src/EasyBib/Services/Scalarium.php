@@ -32,33 +32,27 @@ use \HTTP_Request2;
  */
 abstract class Scalarium
 {
-    protected $endpoint = '';
+    protected $endpoint = 'https://manage.scalarium.com/api/';
     protected $accept = 'application/vnd.scalarium-v1+json';
     protected $token = '';
+    protected $transport = null;
 
 
     /**
      * __construct
      *
-     * @param string $endpoint the endpoint URL for their API
-     * @param string $token    the Scalarium token
+     * @param string $token the Scalarium token
      *
      * @return $this
      *
      * @throws \InvalidArgumentException when $token is empty
      */
-    public function __construct($endpoint, $token)
+    public function __construct($token)
     {
-        if (empty($endpoint)) {
-            $endpoint = 'https://manage.scalarium.com/api/';
-        }
-
         if (empty($token)) {
             throw new \InvalidArgumentException("token can't be empty");
         }
-
-        $this->__set('endpoint', $endpoint);
-        $this->__set('token', $token);
+        $this->token = $token;
     }
 
 
@@ -71,10 +65,13 @@ abstract class Scalarium
      */
     protected function retrieveAPI($path)
     {
-        $transport = new Transport($this->endpoint, $this->accept, $this->token);
-        $request = new \HTTP_Request2;
-        $transport->setRequest($request);
-        return $transport->retrieveAPIData($path);
+        if (null === $this->transport) {
+            $this->transport = new Transport(
+                $this->endpoint, $this->accept, $this->token
+            );
+        }
+
+        return $this->transport->retrieveAPIData($path);
     }
 
 
@@ -96,6 +93,19 @@ abstract class Scalarium
             throw new \RuntimeException("document body isn't correct JSON=$apiJSON");
         }
         return $apiParsedJSON;
+    }
+
+
+    /**
+     * Sets transport object.
+     *
+     * @param \EasyBib\Services\Scalarium\Transport $transport the Transport object
+     *
+     * @return $this
+     */
+    protected function setTransport(\EasyBib\Services\Scalarium\Transport $transport)
+    {
+        $this->transport = $transport;
     }
 
 

@@ -10,7 +10,7 @@ class DeploymentsTest extends \PHPUnit_Framework_TestCase
     {
         $stub = $this->getMock('\EasyBib\Services\Scalarium\Deployments',
                                array('getApplications', 'getDeploymentsByApplication'),
-                               array('https://example.net', 'token'));
+                               array('token'));
         $inApp = array(
                     array('id' => 1),
                     array('id' => 3),

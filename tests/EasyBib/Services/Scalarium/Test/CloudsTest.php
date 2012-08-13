@@ -9,7 +9,7 @@ class CloudsTest extends \PHPUnit_Framework_TestCase
     public function testGetCloudsCorrect()
     {
         $stub = $this->getMock('\EasyBib\Services\Scalarium\Clouds', array('retrieveAPI'),
-                               array('http://example.com', 'token'));
+                               array('token'));
         $stub->expects($this->any())
             ->method('retrieveAPI')
             ->will($this->returnValue('["test2"]'));
@@ -21,7 +21,7 @@ class CloudsTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('RuntimeException');
         $stub = $this->getMock('\EasyBib\Services\Scalarium\Clouds', array('retrieveAPI'),
-                               array('http://example.com', 'token'));
+                               array('token'));
         $stub->expects($this->any())
             ->method('retrieveAPI')
             ->will($this->returnValue(false));
@@ -33,7 +33,7 @@ class CloudsTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('RuntimeException');
         $stub = $this->getMock('\EasyBib\Services\Scalarium\Clouds', array('retrieveAPI'),
-                               array('http://example.com', 'token'));
+                               array('token'));
         $stub->expects($this->any())
             ->method('retrieveAPI')
             ->will($this->returnValue('["test2]'));
@@ -44,7 +44,7 @@ class CloudsTest extends \PHPUnit_Framework_TestCase
     public function testGetApplicationsInCloud()
     {
         $stub = $this->getMock('\EasyBib\Services\Scalarium\Clouds', array('getApplications'),
-                               array('http://example.com', 'token'));
+                               array('token'));
         $in = array(
                     array('cluster_id' => 1),
                     array('cluster_id' => 2, 'data' => 'x'),

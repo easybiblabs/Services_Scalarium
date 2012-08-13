@@ -10,8 +10,8 @@ class ScalariumTest extends \PHPUnit_Framework_TestCase
 {
     public function testConstruct()
     {
-        $clouds = new Clouds('https://example.org', '_token_');
-        $this->assertEquals($clouds->endpoint, 'https://example.org');
+        $clouds = new Clouds('_token_');
+        $this->assertEquals($clouds->endpoint, 'https://manage.scalarium.com/api/');
         $this->assertEquals($clouds->accept, 'application/vnd.scalarium-v1+json');
         $this->assertEquals($clouds->token, '_token_');
     }

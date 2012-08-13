@@ -50,7 +50,7 @@ class Clouds extends Scalarium
      */
     public function getApplications()
     {
-        $applications = new Applications($this->endpoint, $this->token);
+        $applications = new Applications($this->token);
         return $applications->getApplications();
     }
 

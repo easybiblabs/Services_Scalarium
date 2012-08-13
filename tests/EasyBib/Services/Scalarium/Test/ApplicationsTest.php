@@ -9,7 +9,7 @@ class ApplicationsTest extends \PHPUnit_Framework_TestCase
     public function testGetApplicationsCorrect()
     {
         $stub = $this->getMock('\EasyBib\Services\Scalarium\Applications', array('retrieveAPI'),
-                               array('https://example.com', 'token'));
+                               array('token'));
         $stub->expects($this->any())
             ->method('retrieveAPI')
             ->will($this->returnValue('["test"]'));
@@ -21,7 +21,7 @@ class ApplicationsTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('RuntimeException');
         $stub = $this->getMock('\EasyBib\Services\Scalarium\Applications', array('retrieveAPI'),
-                               array('https://example.com', 'token'));
+                               array('token'));
         $stub->expects($this->any())
             ->method('retrieveAPI')
             ->will($this->returnValue(false));
@@ -33,7 +33,7 @@ class ApplicationsTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('RuntimeException');
         $stub = $this->getMock('\EasyBib\Services\Scalarium\Applications', array('retrieveAPI'),
-                               array('https://example.com', 'token'));
+                               array('token'));
         $stub->expects($this->any())
             ->method('retrieveAPI')
             ->will($this->returnValue('["test]'));
@@ -44,7 +44,7 @@ class ApplicationsTest extends \PHPUnit_Framework_TestCase
     public function testGetDeploymentsByApplicationCorrect()
     {
         $stub = $this->getMock('\EasyBib\Services\Scalarium\Applications', array('retrieveAPI'),
-                               array('https://example.com', 'token'));
+                               array('token'));
         $stub->expects($this->any())
             ->method('retrieveAPI')
             ->will($this->returnValue('["test"]'));
@@ -56,7 +56,7 @@ class ApplicationsTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('RuntimeException');
         $stub = $this->getMock('\EasyBib\Services\Scalarium\Applications', array('retrieveAPI'),
-                               array('https://example.com', 'token'));
+                               array('token'));
         $stub->expects($this->any())
             ->method('retrieveAPI')
             ->will($this->returnValue(false));
@@ -68,7 +68,7 @@ class ApplicationsTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('RuntimeException');
         $stub = $this->getMock('\EasyBib\Services\Scalarium\Applications', array('retrieveAPI'),
-                               array('https://example.com', 'token'));
+                               array('token'));
         $stub->expects($this->any())
             ->method('retrieveAPI')
             ->will($this->returnValue('["test]'));
