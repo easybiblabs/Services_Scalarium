@@ -75,7 +75,8 @@ class Transport
     /**
      * Retrieves a document body from their API.
      *
-     * @param string $path the relative path for the API call
+     * @param string $path   the relative path for the API call
+     * @param string $method the HTTP method to use
      *
      * @return string
      *
@@ -83,8 +84,9 @@ class Transport
      * @throws \RuntimeException when another exception occurred in send()
      * @throws \RuntimeException when the returned HTTP status isn't 200
      * @throws \RuntimeException when the returned document body is empty
+     *                           and $method is null
      */
-    public function retrieveAPIData($path)
+    public function retrieveAPIData($path, $method = null)
     {
         if (empty($path)) {
             throw new \InvalidArgumentException("path can't be empty");
@@ -100,6 +102,9 @@ class Transport
         // if you verify SSL, it will throw errors
             ->setHeader('Accept: ' . $this->accept)
             ->setHeader('X-Scalarium-Token: ' . $this->token);
+        if ($method != null) {
+            $request->setMethod($method);
+        }
 
         try {
             $response = $request->send();
@@ -119,7 +124,7 @@ class Transport
         }
 
         $body = $response->getBody();
-        if (empty($body)) {
+        if ((empty($body)) and ($method == null)) {
             throw new \RuntimeException('document body is empty');
         }
         return $body;

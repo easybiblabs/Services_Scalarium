@@ -16,6 +16,7 @@
 namespace EasyBib\Services\Scalarium;
 
 use \EasyBib\Services\Scalarium;
+use \HTTP_Request2;
 
 /**
  * Applications
@@ -59,6 +60,36 @@ class Applications extends Scalarium
         return $this->retrieveAPIParseJSON(
             "applications/$applicationID/deployments"
         );
+    }
+
+
+    /**
+     * Deletes an application.
+     *
+     * @param string $cloudID       ID for the cloud
+     * @param string $applicationID ID for the application
+     *
+     * @return mixed
+     *
+     * @throws \InvalidArgumentException when a parameter is empty
+     * @throws \RuntimeException when the deletion doesn't work
+     */
+    public function deleteApplication($cloudID, $applicationID)
+    {
+        if ((empty($cloudID)) or (empty($applicationID))) {
+            throw new \InvalidArgumentException("can't be empty");
+        }
+
+        try {
+            $this->retrieveAPI(
+                "clouds/$cloudID/applications/$applicationID",
+                \HTTP_Request2::METHOD_DELETE
+            );
+        } catch (\RuntimeException $e) {
+            throw new \RuntimeException(
+                'error occurred in retrieveAPI()', 0, $e
+            );
+        }
     }
 }
 
