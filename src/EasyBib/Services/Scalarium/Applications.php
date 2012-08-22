@@ -91,5 +91,57 @@ class Applications extends Scalarium
             );
         }
     }
+
+
+    /**
+     * Updates an application.
+     *
+     * @param string $cloudID         ID for the cloud
+     * @param string $applicationID   ID for the application
+     * @param array  $applicationData application data to update
+     *
+     * @return mixed
+     *
+     * @throws \InvalidArgumentException when a parameter is empty
+     * @throws \InvalidArgumentException when $applicationData is
+     *                                   not an array or has no
+     *                                   elements
+     * @throws \RuntimeException when updating doesn't work
+     * @throws \RuntimeException when $applicationData can't be
+     *                           converted to JSON
+     */
+    public function updateApplication($cloudID, $applicationID, $applicationData)
+    {
+        if ((empty($cloudID)) or (empty($applicationID))
+            or (empty($applicationData))
+        ) {
+            throw new \InvalidArgumentException("can't be empty");
+        }
+
+        if (!is_array($applicationData)) {
+            throw new \InvalidArgumentException("applicationData isn't an array");
+        }
+
+        if (count($applicationData) == 0) {
+            throw new \InvalidArgumentException("applicationData has no elements");
+        }
+
+        $applicationDataJSON = json_encode($applicationData);
+        if ($applicationDataJSON === false) {
+            throw new \RuntimeException("can't convert applicationData to JSON");
+        }
+
+        try {
+            $this->retrieveAPI(
+                "clouds/$cloudID/applications/$applicationID",
+                \HTTP_Request2::METHOD_PUT,
+                $applicationDataJSON
+            );
+        } catch (\RuntimeException $e) {
+            throw new \RuntimeException(
+                'error occurred in retrieveAPI()', 0, $e
+            );
+        }
+    }
 }
 

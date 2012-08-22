@@ -77,6 +77,7 @@ class Transport
      *
      * @param string $path   the relative path for the API call
      * @param string $method the HTTP method to use
+     * @param string $body   the body data to use for POST and PUT
      *
      * @return string
      *
@@ -86,7 +87,7 @@ class Transport
      * @throws \RuntimeException when the returned document body is empty
      *                           and $method is null
      */
-    public function retrieveAPIData($path, $method = null)
+    public function retrieveAPIData($path, $method = null, $body = null)
     {
         if (empty($path)) {
             throw new \InvalidArgumentException("path can't be empty");
@@ -96,6 +97,7 @@ class Transport
             $this->request = new \HTTP_Request2;
         }
 
+        echo "path=$path  method=$method  endpoint=" . $this->endpoint . "\n";
         $request = $this->request;
         $request->setUrl($this->endpoint . $path);
         $request->setConfig('ssl_verify_peer', false)
@@ -104,6 +106,10 @@ class Transport
             ->setHeader('X-Scalarium-Token: ' . $this->token);
         if ($method != null) {
             $request->setMethod($method);
+        }
+        if ($body != null) {
+            $request->setHeader('Content-Type: application/json'); // @todo
+            $request->setBody($body);
         }
 
         try {

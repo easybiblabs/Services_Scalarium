@@ -60,10 +60,11 @@ abstract class Scalarium
      *
      * @param string $path   the relative path for the API call
      * @param string $method the HTTP method to use
+     * @param string $body   the body data to use for POST and PUT
      *
      * @return string document body
      */
-    protected function retrieveAPI($path, $method = null)
+    protected function retrieveAPI($path, $method = null, $body = null)
     {
         if (null === $this->transport) {
             $this->transport = new Transport(
@@ -71,7 +72,7 @@ abstract class Scalarium
             );
         }
 
-        return $this->transport->retrieveAPIData($path, $method);
+        return $this->transport->retrieveAPIData($path, $method, $body);
     }
 
 
