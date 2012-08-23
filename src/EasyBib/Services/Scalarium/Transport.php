@@ -97,7 +97,6 @@ class Transport
             $this->request = new \HTTP_Request2;
         }
 
-        echo "path=$path  method=$method  endpoint=" . $this->endpoint . "\n";
         $request = $this->request;
         $request->setUrl($this->endpoint . $path);
         $request->setConfig('ssl_verify_peer', false)
