@@ -102,25 +102,14 @@ class Applications extends Scalarium
      * @return mixed
      *
      * @throws \InvalidArgumentException when a parameter is empty
-     * @throws \InvalidArgumentException when $applicationData is
-     *                                   not an array or has no
-     *                                   elements
      * @throws \RuntimeException when updating doesn't work
      * @throws \RuntimeException when $applicationData can't be
      *                           converted to JSON
      */
-    public function updateApplication($applicationID, $applicationData)
+    public function updateApplication($applicationID, array $applicationData)
     {
         if ((empty($applicationID)) or (empty($applicationData))) {
             throw new \InvalidArgumentException("can't be empty");
-        }
-
-        if (!is_array($applicationData)) {
-            throw new \InvalidArgumentException("applicationData isn't an array");
-        }
-
-        if (count($applicationData) == 0) {
-            throw new \InvalidArgumentException("applicationData has no elements");
         }
 
         $applicationDataJSON = json_encode($applicationData);
