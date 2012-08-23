@@ -96,7 +96,6 @@ class Applications extends Scalarium
     /**
      * Updates an application.
      *
-     * @param string $cloudID         ID for the cloud
      * @param string $applicationID   ID for the application
      * @param array  $applicationData application data to update
      *
@@ -110,11 +109,9 @@ class Applications extends Scalarium
      * @throws \RuntimeException when $applicationData can't be
      *                           converted to JSON
      */
-    public function updateApplication($cloudID, $applicationID, $applicationData)
+    public function updateApplication($applicationID, $applicationData)
     {
-        if ((empty($cloudID)) or (empty($applicationID))
-            or (empty($applicationData))
-        ) {
+        if ((empty($applicationID)) or (empty($applicationData))) {
             throw new \InvalidArgumentException("can't be empty");
         }
 
@@ -133,7 +130,7 @@ class Applications extends Scalarium
 
         try {
             $this->retrieveAPI(
-                "clouds/$cloudID/applications/$applicationID",
+                "applications/$applicationID",
                 \HTTP_Request2::METHOD_PUT,
                 $applicationDataJSON
             );
