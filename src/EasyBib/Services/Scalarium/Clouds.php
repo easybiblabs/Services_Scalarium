@@ -79,5 +79,46 @@ class Clouds extends Scalarium
         }
         return $applicationsInCloud;
     }
+
+
+    /**
+     * Retrieves all roles in one cloud from their API.
+     *
+     * @param string $cloudID ID for the cloud
+     *
+     * @return array parsed JSON
+     *
+     * @throws \InvalidArgumentException when $cloudID is empty
+     */
+    public function getRolesByCloud($cloudID)
+    {
+        if (empty($cloudID)) {
+            throw new \InvalidArgumentException("cloudID can't be empty");
+        }
+        return $this->retrieveAPIParseJSON(
+            "clouds/$cloudID/roles"
+        );
+    }
+
+
+    /**
+     * Retrieves all instances in one cloud and role from their API.
+     *
+     * @param string $cloudID ID for the cloud
+     * @param string $roleID  ID for the role
+     *
+     * @return array parsed JSON
+     *
+     * @throws \InvalidArgumentException when a parameter is empty
+     */
+    public function getInstancesByCloudAndRole($cloudID, $roleID)
+    {
+        if ((empty($cloudID)) || (empty($roleID))) {
+            throw new \InvalidArgumentException("can't be empty");
+        }
+        return $this->retrieveAPIParseJSON(
+            "clouds/$cloudID/roles/$roleID/instances"
+        );
+    }
 }
 
