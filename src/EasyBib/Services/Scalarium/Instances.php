@@ -36,11 +36,32 @@ class Instances extends Scalarium
 
 
     /**
+     * the constructor
+     *
+     * @param string $token the Scalarium API token
+     * @param string $cloud the cloud ID
+     *
+     * @return Instances
+     *
+     * @throws \InvalidArgumentException when the token is empty
+     */
+    public function __construct($token, $cloud)
+    {
+        if (empty($token)) {
+            throw new \InvalidArgumentException("token can't be empty");
+        }
+        $this->token = $token;
+        $this->setCloud($cloud);
+        return $this;
+    }
+
+
+    /**
      * Sets the cloud.
      *
      * @param string $cloud the cloud ID
      *
-     * @return mixed
+     * @return Instances
      *
      * @throws \InvalidArgumentException when the cloud is empty
      */
@@ -50,6 +71,7 @@ class Instances extends Scalarium
             throw new \InvalidArgumentException("cloud can't be empty");
         }
         $this->cloud = $cloud;
+        return $this;
     }
 
 
@@ -58,7 +80,7 @@ class Instances extends Scalarium
      *
      * @param string $role the role ID
      *
-     * @return mixed
+     * @return Instances
      *
      * @throws \InvalidArgumentException when the role is empty
      */
@@ -68,19 +90,23 @@ class Instances extends Scalarium
             throw new \InvalidArgumentException("role can't be empty");
         }
         $this->role = $role;
+        return $this;
     }
 
 
     /**
-     * Retrieves all instances in the cloud and role from their API.
+     * Retrieves all instances in the cloud - and optionally role - from their API.
      *
      * @return array parsed JSON
      */
     public function get()
     {
-        return $this->retrieveAPIParseJSON(
-            'clouds/' . $this->cloud . '/roles/' . $this->role . '/instances'
-        );
+        $path = 'clouds/' . $this->cloud;
+        if (!empty($this->role)) {
+            $path .= '/roles/' . $this->role;
+        }
+        $path .= '/instances';
+        return $this->retrieveAPIParseJSON($path);
     }
 }
 
