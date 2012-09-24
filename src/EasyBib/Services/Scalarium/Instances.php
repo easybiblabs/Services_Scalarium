@@ -41,7 +41,7 @@ class Instances extends Scalarium
      * @param string $token the Scalarium API token
      * @param string $cloud the cloud ID
      *
-     * @return Instances
+     * @return mixed
      *
      * @throws \InvalidArgumentException when the token is empty
      */
@@ -52,7 +52,6 @@ class Instances extends Scalarium
         }
         $this->token = $token;
         $this->setCloud($cloud);
-        return $this;
     }
 
 
