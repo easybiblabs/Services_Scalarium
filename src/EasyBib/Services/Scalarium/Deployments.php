@@ -75,5 +75,20 @@ class Deployments extends Scalarium
         }
         return $deployments;
     }
+
+
+    /**
+     * Retrieves a deployment status.
+     *
+     * @param string $cloudID      the cloud ID
+     * @param string $deploymentID the deployment ID
+     *
+     * @return string the deployment status
+     */
+    public function getDeploymentStatus($cloudID, $deploymentID)
+    {
+        $data = $this->retrieveAPIParseJSON("clouds/$cloudID/deployments/$deploymentID");
+        return @$data['status'];
+    }
 }
 
