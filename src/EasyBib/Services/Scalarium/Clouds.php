@@ -79,5 +79,45 @@ class Clouds extends Scalarium
         }
         return $applicationsInCloud;
     }
+
+
+    /**
+     * Deploys to a cloud using a certain command and some given data.
+     *
+     * @param string $cloudID ID for the cloud
+     * @param string $command the command to use
+     * @param array  $data    other data to use
+     *
+     * @return string JSON data from Scalarium
+     *
+     * @throws \InvalidArgumentException when $cloudID or $command is
+     *                                   empty
+     * @throws \RuntimeException when the deployment doesn't work
+     */
+    public function deployToCloud($cloudID, $command, array $data)
+    {
+        if (empty($cloudID)) {
+            throw new \InvalidArgumentException("cloudID can't be empty");
+        }
+
+        if (empty($command)) {
+            throw new \InvalidArgumentException("command can't be empty");
+        }
+
+        $data['command'] = $command;
+        $dataJSON = json_encode($data);
+
+        try {
+            return $this->retrieveAPI(
+                "clouds/$cloudID/deploy",
+                \HTTP_Request2::METHOD_POST,
+                $dataJSON
+            );
+        } catch (\RuntimeException $e) {
+            throw new \RuntimeException(
+                'error occurred in retrieveAPI()', 0, $e
+            );
+        }
+    }
 }
 
