@@ -83,7 +83,8 @@ class Transport
      *
      * @throws \InvalidArgumentException when $path is empty
      * @throws \RuntimeException when another exception occurred in send()
-     * @throws \RuntimeException when the returned HTTP status isn't 200
+     * @throws \RuntimeException when the returned HTTP status isn't 200 or
+     *                           202
      * @throws \RuntimeException when the returned document body is empty
      *                           and $method is null
      */
@@ -119,7 +120,7 @@ class Transport
             );
         }
 
-        if ($response->getStatus() != '200') {
+        if (($response->getStatus() != '200') && ($response->getStatus() != '202')) {
             throw new \RuntimeException(
                 'http status=' .
                 $response->getStatus() .
