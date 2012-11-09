@@ -88,7 +88,7 @@ class Clouds extends Scalarium
      * @param string $command the command to use
      * @param array  $data    other data to use
      *
-     * @return mixed
+     * @return string JSON data from Scalarium
      *
      * @throws \InvalidArgumentException when $cloudID or $command is
      *                                   empty
@@ -108,7 +108,7 @@ class Clouds extends Scalarium
         $dataJSON = json_encode($data);
 
         try {
-            $this->retrieveAPI(
+            return $this->retrieveAPI(
                 "clouds/$cloudID/deploy",
                 \HTTP_Request2::METHOD_POST,
                 $dataJSON
