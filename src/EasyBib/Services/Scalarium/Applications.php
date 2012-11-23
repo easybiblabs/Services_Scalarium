@@ -129,5 +129,45 @@ class Applications extends Scalarium
             );
         }
     }
+
+
+    /**
+     * Deploys to an application using a certain command and some given data.
+     *
+     * @param string $applicationID ID for the application
+     * @param string $command       the command to use
+     * @param array  $data          other data to use
+     *
+     * @return string JSON data from Scalarium
+     *
+     * @throws \InvalidArgumentException when $applicationID or $command is
+     *                                   empty
+     * @throws \RuntimeException when the deployment doesn't work
+     */
+    public function deployToApplication($applicationID, $command, array $data)
+    {
+        if (empty($applicationID)) {
+            throw new \InvalidArgumentException("applicationID can't be empty");
+        }
+
+        if (empty($command)) {
+            throw new \InvalidArgumentException("command can't be empty");
+        }
+
+        $data['command'] = $command;
+        $dataJSON = json_encode($data);
+
+        try {
+            return $this->retrieveAPI(
+                "applications/$applicationID/deploy",
+                \HTTP_Request2::METHOD_POST,
+                $dataJSON
+            );
+        } catch (\RuntimeException $e) {
+            throw new \RuntimeException(
+                'error occurred in retrieveAPI()', 0, $e
+            );
+        }
+    }
 }
 
